@@ -1,0 +1,25 @@
+version: '3'
+services:
+    db:
+        image: postgres
+        restart: always
+        environment:
+          POSTGRES_PASSWORD: "admin"
+          POSTGRES_DB: "urls_db"
+        ports:
+          - "5432:5432"
+        depends_on: 
+            - web
+        networks:
+          - db-network
+    web:
+        build: .
+        volumes:
+            - .:/var/www/html/url_shortner
+        ports:
+            - 3000:80
+        restart: always
+
+networks: 
+    db-network:
+        driver: bridge
