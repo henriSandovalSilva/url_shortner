@@ -1,5 +1,8 @@
 <?php
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 return [
   'paths' => [
     'migrations' => __DIR__ . '/database/migrations'
@@ -10,11 +13,11 @@ return [
     'default_database' => 'development',
     'development' => [
       'adapter' => 'pgsql',
-      'host' => '192.168.0.7',
-      'name' => 'urls_db',
-      'user' => 'postgres',
-      'pass' => 'admin',
-      'port' => 5432
+      'host' => $_ENV['DB_HOST'],
+      'name' => $_ENV['DB_NAME'],
+      'user' => $_ENV['DB_USER'],
+      'pass' => $_ENV['DB_PASS'],
+      'port' => $_ENV['DB_PORT']
     ]
   ]
 ];

@@ -2,7 +2,7 @@
 
 require 'vendor/autoload.php';
         
-require 'database/config.php';
+require './config.php';
 
 require 'routes.php';
 
