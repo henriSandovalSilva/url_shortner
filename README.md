@@ -23,6 +23,8 @@ Este projeto é uma API RESTful para um encurtador de URLs.
 `docker-compose up -d`
 
 3. Clonar o projeto em /var/www/html/url_shortner
+`cd /var/www/html`
+`git clone https://github.com/henriSandovalSilva/url_shortner.git`
 
 4. Instalar as dependências </br>
 `composer install`
