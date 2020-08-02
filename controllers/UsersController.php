@@ -26,15 +26,6 @@ class UsersController {
         Flight::halt(500);
     }
 
-    public static function showUserStats($user_id) 
-    {
-        $model = new UrlsModel();
-        $user_stats = $model->getUrlsByUser($user_id);
-
-        Flight::json($user_stats);
-        die();
-    }
-
     public static function deleteUser($user_id) 
     {
         $model = new UsersModel();
