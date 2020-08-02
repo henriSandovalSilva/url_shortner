@@ -2,7 +2,7 @@
 
 use Flight;
 
-class UsersModel extends Model 
+class UrlsModel extends Model 
 {
     public function getUrl($url_id)
     {
@@ -86,12 +86,12 @@ class UsersModel extends Model
         
         $query = $this->conn->query("SELECT SUM(hits) AS total FROM urls;");
         
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $query->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getTotalUrls($user_id = 0)
     {
-        if ($url_id > 0) {
+        if ($user_id > 0) {
             $stmt = $this->conn->prepare("SELECT COUNT(id) AS total FROM urls WHERE user_id = :user_id;");
 
             $stmt->execute(array(
@@ -103,7 +103,7 @@ class UsersModel extends Model
         
         $query = $this->conn->query("SELECT COUNT(id) AS total FROM urls;");
         
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $query->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getAllUrls($user_id = 0, $limit = 10)

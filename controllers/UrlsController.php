@@ -13,7 +13,7 @@ class UrlsController {
             $data = $model->getUrl($url_id);
 
             if (empty($data['url'])) {
-                return Flight::json('Erro');
+                return Flight::halt(404);
             }
     
             if (preg_match('/http(s)?:\/\//i', $data['url']) !== 1) {
@@ -26,7 +26,7 @@ class UrlsController {
             die();
         }
 
-        return Flight::json('Erro');
+        return Flight::halt(400);
     }
 
     public static function storeUrl($user_id) 
@@ -52,10 +52,20 @@ class UrlsController {
     public static function deleteUrl($url_id) 
     {
         $model = new UrlsModel();
-        $return = $model->deleteUrl($url_id);
 
-        Flight::json($return);
-        die();
+        $url = $model->getUrl($url_id);
+
+        if (isset($url['id']) && $url['id'] > 0) {
+            $return = $model->deleteUrl($url_id);
+
+            if ($return) {
+                Flight::halt(204);
+            }
+
+            Flight::halt(500);
+        }
+
+        Flight::halt(400);
     }
 
     public static function showUrlStats($url_id) 
@@ -75,7 +85,13 @@ class UrlsController {
         $total_urls = $model->getTotalUrls($user_id);
         $urls = $model->getAllUrls($user_id);
 
-        Flight::json($user_stats);
+        $return = array(
+            "hits" => $total_hits['total'],
+            "urlCount" => $total_urls['total'],
+            "topUrls" => $urls
+        );
+
+        Flight::json($return);
         die();
     }
 }
