@@ -22,9 +22,14 @@ Este projeto é uma API RESTful para um encurtador de URLs.
 2. Subir o container do Docker </br>
 `docker-compose up -d`
 
-3. Clonar o projeto em /var/www/html/url_shortner
+3. Clonar o projeto em /var/www/html/url_shortner </br>
+`cd /var/www/html` </br>
+`git clone https://github.com/henriSandovalSilva/url_shortner.git`
 
 4. Instalar as dependências </br>
 `composer install`
+
+5. Rodar as migrations </br>
+`vendor/bin/phinx migrate`
 
 A API irá executar em: [http://localhost:3000](http://localhost:3000)
