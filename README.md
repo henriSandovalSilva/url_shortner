@@ -19,7 +19,12 @@ Este projeto é uma API RESTful para um encurtador de URLs.
 
 1. Configurar o arquivo .env
 
-2. Subir o container do Docker
+2. Subir o container do Docker </br>
 `docker-compose up -d`
+
+3. Clonar o projeto em /var/www/html/url_shortner
+
+4. Instalar as dependências </br>
+`composer install`
 
 A API irá executar em: [http://localhost:3000](http://localhost:3000)
