@@ -29,4 +29,7 @@ Este projeto é uma API RESTful para um encurtador de URLs.
 4. Instalar as dependências </br>
 `composer install`
 
+5. Rodar as migrations </br>
+`vendor/bin/phinx migrate`
+
 A API irá executar em: [http://localhost:3000](http://localhost:3000)
