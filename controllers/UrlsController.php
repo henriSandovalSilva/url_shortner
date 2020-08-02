@@ -6,14 +6,14 @@ class UrlsController {
 
     public static function showUrl($short_url) 
     {
-        $url_id = ShortURL::encode($short_url);
+        $url_id = ShortURL::decode($short_url);
 
         if ($url_id > 0) {
             $model = new UrlsModel();
             $data = $model->getUrl($url_id);
 
             if (empty($data['url'])) {
-                return Flight::halt(404);
+                return Flight::halt(404, '{ "error": "Not found" }');
             }
     
             if (preg_match('/http(s)?:\/\//i', $data['url']) !== 1) {

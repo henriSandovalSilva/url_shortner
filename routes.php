@@ -1,8 +1,15 @@
 <?php
 
+
+/**
+ * Verify if Content-Type is application/json
+ */
+require './middlewares/content_type.php';
+
 /**
  * Urls routes
  */
+
 Flight::route('GET /stats', ['UrlsController', 'showStats']);
 
 Flight::route('GET /stats/@url_id', ['UrlsController', 'showUrlStats']);

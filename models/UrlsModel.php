@@ -112,7 +112,7 @@ class UrlsModel extends Model
             $stmt = $this->conn->prepare("SELECT id, hits, url, short_url, user_id FROM urls WHERE user_id = :user_id ORDER BY hits DESC LIMIT {$limit};");
 
             $stmt->execute(array(
-                ':id' => $user_id,
+                ':user_id' => $user_id,
             ));
     
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
