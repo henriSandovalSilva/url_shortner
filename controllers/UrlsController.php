@@ -33,6 +33,16 @@ class UrlsController {
     {
         $request = json_decode(Flight::request()->getBody(), true);
 
+        $usersModel = new UsersModel();
+
+        if ($user_id > 0) {
+            $user = $usersModel->getUserById($user_id);
+
+            if (!isset($user['id'])) {
+                Flight::halt(400, '{ "error": "User not found" }');
+            }
+        }
+
         $model = new UrlsModel();
         $url_id = $model->createUrl($user_id, $request['url']);
 
@@ -65,7 +75,7 @@ class UrlsController {
             Flight::halt(500);
         }
 
-        Flight::halt(400);
+        Flight::halt(400, '{ "error": "Url not found" }');
     }
 
     public static function showUrlStats($url_id) 
@@ -73,12 +83,26 @@ class UrlsController {
         $model = new UrlsModel();
         $url = $model->getUrl($url_id);
 
+        if (!isset($url['id'])) {
+            Flight::halt(400, '{ "error": "Url not found" }');
+        }
+
         Flight::json($url);
         die();
     }
 
     public static function showStats($user_id = 0) 
     {
+        $usersModel = new UsersModel();
+
+        if ($user_id > 0) {
+            $user = $usersModel->getUserById($user_id);
+
+            if (!isset($user['id'])) {
+                Flight::halt(400, '{ "error": "User not found" }');
+            }
+        }
+
         $model = new UrlsModel();
 
         $total_hits = $model->getTotalHitsUrls($user_id);
@@ -86,7 +110,7 @@ class UrlsController {
         $urls = $model->getAllUrls($user_id);
 
         $return = array(
-            "hits" => $total_hits['total'],
+            "hits" => $total_hits['total'] ?: 0,
             "urlCount" => $total_urls['total'],
             "topUrls" => $urls
         );

@@ -12,7 +12,7 @@ class UsersController {
         $user = $model->getUser($request['id']);
 
         if (isset($user['id']) && $user['id'] > 0) {
-            Flight::halt(409);
+            Flight::halt(409, '{ "error": "User alredy exists" }');
         }
 
         $result = $model->createUser($request['id']);
@@ -29,9 +29,19 @@ class UsersController {
     public static function deleteUser($user_id) 
     {
         $model = new UsersModel();
-        $return = $model->deleteUser($user_id);
 
-        Flight::json($return);
-        die();
+        $user = $model->getUserById($user_id);
+
+        if (isset($user['id']) && $user['id'] > 0) {
+            $return = $model->deleteUser($user_id);
+
+            if ($return) {
+                Flight::halt(204);
+            }
+
+            Flight::halt(500);
+        }
+        
+        Flight::halt(400, '{ "error": "User not found" }');
     }
 }

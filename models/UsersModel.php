@@ -4,9 +4,20 @@ use Flight;
 
 class UsersModel extends Model 
 {
+    public function getUserById($user_id) 
+    {
+        $stmt = $this->conn->prepare("SELECT id, user_identification FROM users WHERE id = :user_id");
+
+        $stmt->execute(array(
+          ':user_id' => $user_id
+        ));
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function getUser($user_identification) 
     {
-        $stmt = $this->conn->prepare("SELECT id FROM users WHERE user_identification = :user_identification");
+        $stmt = $this->conn->prepare("SELECT id, user_identification FROM users WHERE user_identification = :user_identification");
 
         $stmt->execute(array(
           ':user_identification' => $user_identification
